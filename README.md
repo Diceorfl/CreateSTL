@@ -5,10 +5,12 @@
    1. The input file is a txt format file that contains a table with elevation values.  
       Columns are separated by tabs.  
    2. Checking the number of rows and columns.(>=2)  
-   3. The length of the rows must be equal.  
+      The length of the rows must be equal.  
+   3. Creates triangles between i and i + 1 line  
    4. Calculation of coefficients for normalization by X.  
    5. Creating triangles in STL format.    
    6. Creating an STL file.  
+   Launch command line example: CreateSTL.py input.txt output.STL 
    
  ### Как это работает?  
    1. На вход подается файл формата txt, в котором содержится таблица со значениями высот.  
@@ -19,3 +21,4 @@
    4. Вычисления коэффициентов для нормировки по X.  
    5. Создание треугольников в формате STL.  
    6. Формирование STL файла.  
+   Пример командной строки: CreateSTL.py input.txt output.STL  
