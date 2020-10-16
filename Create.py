@@ -1,5 +1,5 @@
-from STLTriangle import STLTriangle
 from pathlib import Path
+from STLTriangle import STLTriangle
 
 def check_argc(size):
   if size != 3:
@@ -17,14 +17,14 @@ def check_input_file_name(filename):
 # то не получится создать пары треугольников
 #If length < 2 or != lenght of first string then this is the wrong size for
 #creating triangles
-def Sizecontrol(index,size,lengthcontrol):
-  if lengthcontrol == 0: lengthcontrol = size
-  if size < 2 or size != lengthcontrol:
+def size_control(index,size,length_control):
+  if length_control == 0: length_control = size
+  if size < 2 or size != length_control:
     print("Line number ",index," is the wrong size!")
     return False
   return True
 
-def ReadFile(filename,Zco):
+def read_file(filename,Zco):
   if not check_input_file_name(filename):
     return False
   try:
@@ -33,18 +33,18 @@ def ReadFile(filename,Zco):
     print("File not available")
     return False
   print("Get information from " + filename)
-  lengthcontrol = 0
+  length_control = 0
   for index,line in enumerate(input,1):
     if len(line) == 0: continue
     Z = list(map(int,line.split("\t")))
-    if not Sizecontrol(index,len(Z),lengthcontrol): return False
+    if not size_control(index,len(Z),length_control): return False
     Zco.append(Z)
   input.close()
   return True
 
 #Высчитывает коэффициенты для нормирования по X
 #Calculates coefficients for normalization by X
-def CalculateCoeff(Zco):
+def calculate_coeff(Zco):
   Xcoef = 1.0
   Ycoef = len(Zco[0])/len(Zco)
   Zmax = max(Zco[0])
@@ -59,7 +59,7 @@ def CalculateCoeff(Zco):
 
 #Создает треугольники между i и i+1 строкой
 #Creates triangles between i and i + 1 line
-def CreateTriangles(Zco,Triangles):
+def create_triangles(Zco,Triangles):
   for i in range(0,len(Zco)-1):
     for j in range(0,len(Zco[0])-1):
       ABC1 = STLTriangle((j,i,Zco[i][j]),(j+1,i,Zco[i][j+1]),(j,i+1,Zco[i+1][j]))
@@ -69,7 +69,7 @@ def CreateTriangles(Zco,Triangles):
 
 #Создает треугольник в формате STL
 #Creates a triangle in STL format
-def CreateOutput(Triangles,Coefficient,Outputstr):
+def create_output(Triangles,Coefficient,Outputstr):
   Outputstr.append("solid STL_OBJECT" + "\n")
   for Triangle in Triangles:
     Outputstr.append("   facet normal " + str(Triangle.getNormal(0)) + " " + str(Triangle.getNormal(1)) + " " + str(Triangle.getNormal(2)) + "\n" +
@@ -81,7 +81,7 @@ def CreateOutput(Triangles,Coefficient,Outputstr):
     "   endfacet" + '\n')
   Outputstr.append("endsolid")
 
-def CreateSTL(filename,Outputstr):
+def create_STL(filename,Outputstr):
   output = open(filename,"w")
   for line in Outputstr:
     output.write(line)
